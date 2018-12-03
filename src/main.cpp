@@ -10,6 +10,8 @@ void setup();
 void refreshMoves();
 void move();
 
+void cleanUpHumanRemains();
+
 vector<Organism*> organisms;
 City city;
 
@@ -29,18 +31,39 @@ int main() {
         refreshMoves();
         iteration++;
         move();
+        cleanUpHumanRemains();
 
     }
     return 0;
 }
 
+void cleanUpHumanRemains() {
+    for (int i = organisms.size() - 1; i > -1; i--) {
+        if (organisms.at(i)->getSpecies() == 'H') {
+            auto *human = (Human *) organisms.at(i);
+            if (human->isEaten()) {
+                organisms.erase(organisms.begin() + i);
+                humanCount--;
+            }
+        }
+    }
+}
+
 void move() {
-    for (auto &organism : organisms)
-        organism->move();
+    for (auto &organism : organisms) {
+        if (organism->getSpecies() == 'H')
+            organism->move();
+    }
+    for (auto &organism : organisms) {
+        if (organism->getSpecies() == 'Z')
+            organism->move();
+    }
+
 }
 
 void refreshMoves(){
-
+    for (auto &organism : organisms)
+        organism->newTurn();
 }
 
 void setup(){

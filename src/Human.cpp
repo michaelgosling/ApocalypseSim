@@ -1,6 +1,7 @@
 // Human.cpp - Class file for Human.h
 //
 // Created by Michael Gosling on 11/30/18.
+// Last Updated by Michael Gosling on 12/03/18.
 //
 
 #include "Human.h"
@@ -8,9 +9,11 @@
 /// Constructors
 Human::Human() {
     this->species = 'H';
+    this->eaten = false;
 }
 Human::Human(City *city, int width, int height) : Organism(city, width, height) {
     this->species = 'H';
+    this->eaten = false;
 }
 
 /// Destructors
@@ -77,5 +80,13 @@ void Human::move() {
 
     moved = true;
     stepCount++;
+}
+
+bool Human::isEaten() {
+    return eaten;
+}
+
+void Human::die() {
+    eaten = true;
 }
 

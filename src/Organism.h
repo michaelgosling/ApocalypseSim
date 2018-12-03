@@ -1,6 +1,7 @@
 // Organism.h - Header file for Organism.cpp
 //
 // Created by Michael Gosling on 11/30/18.
+// Last Updated by Michael Gosling on 12/03/18.
 //
 
 
@@ -19,6 +20,7 @@ protected:
     int y;
     int width;
     int height;
+    int stepCount;
     char species;
     bool moved;
     City *city;

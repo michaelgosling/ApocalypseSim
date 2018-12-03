@@ -1,6 +1,7 @@
 // Human.h - Header file for Human.cpp
 //
 // Created by Michael Gosling on 11/30/18.
+// Last Updated by Michael Gosling on 12/03/18.
 //
 
 #ifndef APOCALYPSESIM_HUMAN_H
@@ -11,12 +12,15 @@
 class Human : public Organism
 {
 private:
-    int stepCount;
+    bool eaten;
 public:
     Human();
     Human( City *city, int width, int height );
     virtual ~Human();
 
+    bool isEaten();
+
+    void die();
     int* breed() override;
 
     void move() override;
