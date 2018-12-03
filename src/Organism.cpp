@@ -22,6 +22,25 @@ void Organism::setPosition(int x, int y) {
     this->y = y;
 }
 
+/**
+ * Returns the objects species property
+ * @return char representing species
+ */
 char Organism::getSpecies() {
     return this->species;
+}
+
+/**
+ * Returns the 'moved' property
+ * @return bool representing whether it moved or not
+ */
+bool Organism::didMove() {
+    return moved;
+}
+
+/**
+ * Sets moved to false;
+ */
+void Organism::newTurn() {
+    moved = false;
 }

@@ -8,7 +8,7 @@
 #define APOCALYPSESIM_ORGANISM_H
 
 #include <iostream>
-class City;
+#include "City.h"
 
 using namespace std;
 
@@ -30,9 +30,15 @@ public:
     Organism( City *city, int width, int height );
     virtual ~Organism();
 
-    //virtual void move() = 0;
+    bool didMove();
+
+    void newTurn();
+
+    virtual void move() = 0;
+    virtual int* breed() = 0;
     //virtual void spawn() = 0;
     char getSpecies();
+
     //virtual void getPosition() = 0;
 
     void setPosition( int x, int y );

@@ -20,17 +20,17 @@ const double PAUSE_SECONDS = .09; // pause between steps
 const int ITERATIONS = 1000; // max number of steps
 
 //Colors
-//0  = black				//9  = bright blue
-//1  = blue					//10 = bright green
-//2  = green				//11 = bright turquoise
-//3  = turquise				//12 = bright red
-//4  = red					//13 = bright pink
-//5  = pink					//14 = bright yellow
-//6  = yellow				//15 = bright white
-//7  = white regular		//16+ = solid blocks
-//8  = white pale
+//0 - Black
+//1 - Red
+//2 - Green
+//3 - Brown/yellow
+//4 - Blue
+//5 - Purple
+//6 - Cyan
+//7 - Light grey/white
+//9 - Default
 
-const int HUMAN_COLOR = 3; // turquoise
-const int ZOMBIE_COLOR = 14; // bright yellow
+const int HUMAN_COLOR = 6; // cyan
+const int ZOMBIE_COLOR = 1; // bright yellow
 
 #endif //APOCALYPSESIM_GAMESPECS_H

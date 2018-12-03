@@ -24,30 +24,58 @@ Human::~Human() {
 /**
  * Attempts to add a new human to an empty adjacent space
  */
-void Human::recruit(){
-    // TODO: Recruit Routine
-}
+int* Human::breed(){
+    if(stepCount >= 3){
+        stepCount = 0;
+        if (city->getOrganism(x, y - 1) == nullptr)
+            return new int[2] {x, y-1};
+        else if (city->getOrganism(x + 1, y) == nullptr)
+            return new int[2] {x+1, y};
+        else if (city->getOrganism(x, y + 1) == nullptr)
+            return new int[2] {x, y+1};
+        else if (city->getOrganism(x - 1, y) == nullptr)
+            return new int[2] {x-1, y};
+        else
+            return nullptr;
+    } else {
+        return nullptr;
+    }
 
+}
 
 /**
  * Human attempts to move to an adjacent space
  */
 void Human::move() {
-    // TODO: Finish move routine
     int direction = rand() % 4;
+    int newX = x;
+    int newY = y;
+
+    // use a switch to get new co-ordinate.
     switch (direction) {
         case NORTH:
-            //this->setPosition(x, y-1);
+            newY = (y-1 < 0) ? y : y-1;
             break;
         case SOUTH:
-            //this->setPosition(x, y+1);
+            newY = (y+1 > 19) ? y : y+1;
             break;
         case EAST:
-            //this->setPosition(x+1, y);
+            newX = (x+1 > 19) ? x : x+1;
             break;
         case WEST:
-            //this->setPosition(x-1, y);
+            newX = (x-1 < 0) ? x : x-1;
+            break;
+        default:
             break;
     }
+
+    if (city->getOrganism(newX, newY) == nullptr) {
+        city->setOrganism(nullptr, x, y);
+        this->setPosition(newX, newY);
+        city->setOrganism(this, x, y);
+    }
+
+    moved = true;
+    stepCount++;
 }
 

@@ -17,8 +17,9 @@ public:
     Human( City *city, int width, int height );
     virtual ~Human();
 
-    void recruit();
-    void move();
+    int* breed() override;
+
+    void move() override;
 };
 
 

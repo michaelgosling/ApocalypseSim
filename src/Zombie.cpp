@@ -21,3 +21,7 @@ Zombie::~Zombie() {}
 void Zombie::move() {
 
 }
+
+int *Zombie::breed() {
+    return nullptr;
+}

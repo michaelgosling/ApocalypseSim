@@ -6,15 +6,45 @@
 #include "Zombie.h"
 
 void displayGrid();
+void setup();
+void refreshMoves();
+void move();
 
-vector<Organism> organisms;
+vector<Organism*> organisms;
 City city;
 
 int humanCount;
 int zombieCount;
+bool running = false;
+int iteration = 1;
 
 int main() {
 
+    // setup
+    setup();
+    while (running){
+        // display grid
+        displayGrid();
+        cin.get();
+        refreshMoves();
+        iteration++;
+        move();
+
+    }
+    return 0;
+}
+
+void move() {
+    for (auto &organism : organisms)
+        organism->move();
+}
+
+void refreshMoves(){
+
+}
+
+void setup(){
+    running = true;
     humanCount = 0;
     zombieCount = 0;
 
@@ -27,24 +57,18 @@ int main() {
         } while (city.getOrganism(x, y) != nullptr);
 
         if (humanCount < HUMAN_STARTCOUNT) {
-            Human *human = new Human(&city, 1, 1);
+            auto *human = new Human(&city, 1, 1);
             human->setPosition(x, y);
             city.setOrganism(human, x, y);
             humanCount++;
         } else {
-            Zombie *zombie = new Zombie(&city, 1, 1);
+            auto *zombie = new Zombie(&city, 1, 1);
             zombie->setPosition(x, y);
             city.setOrganism(zombie, x, y);
             zombieCount++;
         }
-        organisms.insert(organisms.end(), *city.getOrganism(x, y));
+        organisms.insert(organisms.end(), city.getOrganism(x, y));
     }
-
-
-    // display grid
-    displayGrid();
-
-    return 0;
 }
 
 void displayGrid(){
@@ -52,13 +76,12 @@ void displayGrid(){
         for (int j = 0; j < GRIDSIZE; j++){
             if (city.getOrganism(i, j) == nullptr)
                 cout << ' ' << '-' << ' ';
+            else if (city.getOrganism(i, j)->getSpecies() == 'H')
+                cout << "\033[3" << HUMAN_COLOR << "m H \033[0m";
             else
-                cout << ' ' << city.getOrganism(i, j)->getSpecies() << ' ';
+                cout << "\033[3" << ZOMBIE_COLOR << "m Z \033[0m";
         }
         cout << endl;
     }
-
-    cout << "Number of Zombies: " << zombieCount << endl;
-    cout << "Number of Humans: " << humanCount << endl;
-
+    cout << "Zombies: " << zombieCount << " | Humans: " << humanCount << " | Iteration: " << iteration << endl;
 }
