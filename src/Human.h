@@ -18,12 +18,12 @@ class Human : public Organism
 public:
     Human();
 
-    Human(City *city);
+    Human(City *);
     virtual ~Human();
 
     void move() override;
 
-    void spawn() override;
+    void breed() override;
 };
 
 

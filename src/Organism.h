@@ -1,7 +1,7 @@
 // Organism.h - Header file for Organism.cpp
 //
 // Created by Michael Gosling on 11/30/18.
-// Last Updated by Michael Gosling on 12/03/18.
+// Last Updated by Michael Gosling on 12/06/18.
 //
 
 
@@ -23,9 +23,7 @@ class Organism
 protected:
     int x;
     int y;
-    int spawnCount;
     bool moved;
-    bool spawned;
     Species species;
     City *city;
     enum {
@@ -33,33 +31,22 @@ protected:
     };
 
 public:
-
     Organism();
 
-    Organism(City *city);
+    Organism(City *);
     virtual ~Organism();
 
     virtual void move() = 0;
 
-    virtual void spawn() = 0;
+    virtual void breed() = 0;
 
-    void setPosition(int x, int y);
-
+    void setPosition(int, int);
     bool getMoved();
 
-    void setMoved(bool moved);
-
-    bool getSpawned();
-
-    void setSpawned(bool spawned);
-
-    int getSpawnCount();
-
-    void setSpawnCount(int spawnCount);
-
+    void setMoved(bool);
     Species getSpecies();
 
-    friend ostream &operator<<(ostream &output, Organism *organism);
+    friend ostream &operator<<(ostream &, Organism *);
 };
 
 

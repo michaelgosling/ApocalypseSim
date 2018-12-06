@@ -17,24 +17,20 @@ using namespace std;
 class Zombie : public Organism
 {
 protected:
-    int starved;
+    int starveTimer = 0;
+    int infectTimer;
 
 public:
     Zombie();
 
-    Zombie(City *city);
+    Zombie(City *);
     virtual ~Zombie();
 
     void move() override;
 
-    void spawn() override;
-
-    int getStarved();
-
-    void setStarved(int eat);
+    void breed() override;
 
     void starve();
-
 };
 
 

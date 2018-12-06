@@ -9,10 +9,10 @@
 
 #include <iostream>
 #include "GameSpecs.h"
+#include "Organism.h"
 
 using namespace std;
 
-class Organism;
 
 class City
 {
@@ -23,13 +23,12 @@ public:
     City();
     virtual ~City();
 
-    Organism *getOrganism(int x, int y);
+    Organism *getOrganism(int, int);
 
-    void setOrganism(Organism *organism, int x, int y);
-
+    void setOrganism(Organism *, int, int);
     void move();
 
-    friend ostream &operator<<(ostream &output, City &city);
+    friend ostream &operator<<(ostream &, City &);
 
 };
 
