@@ -126,11 +126,14 @@ void Zombie::breed() {
 }
 
 /**
- * Convert zombie back to human if it's starved
+ * Convert zombie to human if it's starved
  */
 void Zombie::starve() {
     if (this->starveTimer >= ZOMBIE_STARVE) {
-        // TODO: Starve code
+        auto *human = new Human(city);
+        human->setPosition(x, y);
+        city->setOrganism(human, x, y);
+        delete this;
     }
 }
 
