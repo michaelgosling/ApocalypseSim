@@ -6,42 +6,52 @@
 
 #include "Organism.h"
 
-/// Constructors
-Organism::Organism() = default;
-Organism::Organism(City *city, int width, int height) {
+Organism::Organism() {
+
+}
+
+Organism::Organism(City *city) {
     this->city = city;
-    this->width = width;
-    this->height = height;
 }
 
-/// Destructors
-Organism::~Organism() {}
 
-/// Routines
+Organism::~Organism() {
+
+}
+
 void Organism::setPosition(int x, int y) {
-    this->x = x;
-    this->y = y;
+
 }
 
-/**
- * Returns the objects species property
- * @return char representing species
- */
-char Organism::getSpecies() {
+bool Organism::getMoved() {
+    return false;
+}
+
+void Organism::setMoved(bool moved) {
+
+}
+
+bool Organism::getSpawned() {
+    return false;
+}
+
+void Organism::setSpawned(bool spawned) {
+
+}
+
+int Organism::getSpawnCount() {
+    return 0;
+}
+
+void Organism::setSpawnCount(int spawnCount) {
+
+}
+
+Species Organism::getSpecies() {
     return this->species;
 }
 
-/**
- * Returns the 'moved' property
- * @return bool representing whether it moved or not
- */
-bool Organism::didMove() {
-    return moved;
-}
-
-/**
- * Sets moved to false;
- */
-void Organism::newTurn() {
-    moved = false;
+ostream &operator<<(ostream &output, Organism *organism) {
+    output << " " << ((Species::ZOMBIE == organism->getSpecies()) ? 'Z' : 'H') << " ";
+    return output;
 }

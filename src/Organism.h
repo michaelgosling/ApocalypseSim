@@ -9,45 +9,57 @@
 #define APOCALYPSESIM_ORGANISM_H
 
 #include <iostream>
-#include "City.h"
 
 using namespace std;
+
+class City;
+
+enum class Species {
+    ZOMBIE, HUMAN
+};
 
 class Organism
 {
 protected:
     int x;
     int y;
-    int width;
-    int height;
-    int stepCount;
-    char species;
+    int spawnCount;
     bool moved;
+    bool spawned;
+    Species species;
     City *city;
-
-    enum { WEST, NORTH, EAST, SOUTH, NUM_DIRECTIONS };
+    enum {
+        WEST, NORTH, EAST, SOUTH, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
+    };
 
 public:
+
     Organism();
-    Organism( City *city, int width, int height );
+
+    Organism(City *city);
     virtual ~Organism();
 
-    bool didMove();
-
-    void newTurn();
-
     virtual void move() = 0;
-    virtual int* breed() = 0;
-    //virtual void spawn() = 0;
-    char getSpecies();
 
-    //virtual void getPosition() = 0;
+    virtual void spawn() = 0;
 
-    void setPosition( int x, int y );
-    void endTurn();
-    bool isTurn();
+    void setPosition(int x, int y);
 
-    //friend ostream& operator<<( ostream &output, Organism *organism );
+    bool getMoved();
+
+    void setMoved(bool moved);
+
+    bool getSpawned();
+
+    void setSpawned(bool spawned);
+
+    int getSpawnCount();
+
+    void setSpawnCount(int spawnCount);
+
+    Species getSpecies();
+
+    friend ostream &operator<<(ostream &output, Organism *organism);
 };
 
 

@@ -1,110 +1,56 @@
 #include <iostream>
 #include <vector>
 #include "City.h"
-#include "GameSpecs.h"
 #include "Human.h"
 #include "Zombie.h"
 
-void displayGrid();
-void setup();
-void refreshMoves();
-void move();
-
-void cleanUpHumanRemains();
-
+City *city;
 vector<Organism*> organisms;
-City city;
 
-int humanCount;
-int zombieCount;
-bool running = false;
-int iteration = 1;
+int getCount(Species species);
+
+void displayGrid();
+
+void setup() {
+    city = new City;
+
+    for (auto j = 0; j < HUMAN_STARTCOUNT + ZOMBIE_STARTCOUNT; j++) {
+        int x = 0;
+        int y = 0;
+        do {
+            x = rand() % GRID_WIDTH;
+            y = rand() % GRID_HEIGHT;
+        } while (city->getOrganism(x, y) != nullptr);
+        if (j < HUMAN_STARTCOUNT) {
+            auto *human = new Human(city);
+            human->setPosition(x, y);
+            city->setOrganism(human, x, y);
+        } else {
+            auto *zombie = new Zombie(city);
+            zombie->setPosition(x, y);
+            city->setOrganism(zombie, x, y);
+        }
+        organisms.insert(organisms.end(), city->getOrganism(x, y));
+    }
+
+}
 
 int main() {
-
-    // setup
     setup();
-    while (running){
-        // display grid
-        displayGrid();
-        cin.get();
-        refreshMoves();
-        iteration++;
-        move();
-        cleanUpHumanRemains();
-
-    }
-    return 0;
+    displayGrid();
 }
 
-void cleanUpHumanRemains() {
-    for (int i = organisms.size() - 1; i > -1; i--) {
-        if (organisms.at(i)->getSpecies() == 'H') {
-            auto *human = (Human *) organisms.at(i);
-            if (human->isEaten()) {
-                organisms.erase(organisms.begin() + i);
-                humanCount--;
-            }
-        }
-    }
-}
-
-void move() {
-    for (auto &organism : organisms) {
-        if (organism->getSpecies() == 'H')
-            organism->move();
-    }
-    for (auto &organism : organisms) {
-        if (organism->getSpecies() == 'Z')
-            organism->move();
-    }
+void displayGrid() {
+    cout << *city;
+    cout << "Humans: " << to_string(getCount(Species::HUMAN)) << " | Zombies: " << to_string(getCount(Species::ZOMBIE))
+         << endl;
 
 }
 
-void refreshMoves(){
-    for (auto &organism : organisms)
-        organism->newTurn();
-}
+int getCount(Species species) {
+    int count = 0;
+    for (auto &org: organisms)
+        if (org->getSpecies() == species) count++;
 
-void setup(){
-    running = true;
-    humanCount = 0;
-    zombieCount = 0;
-
-    // fill organisms vector
-    for (int i = 1; i <= HUMAN_STARTCOUNT + ZOMBIE_STARTCOUNT; i++) {
-        int x, y;
-        do {
-            x = rand() % (GRIDSIZE+1) - 1;
-            y = rand() % (GRIDSIZE+1) - 1;
-        } while (city.getOrganism(x, y) != nullptr);
-
-        if (humanCount < HUMAN_STARTCOUNT) {
-            auto *human = new Human(&city, 1, 1);
-            human->setPosition(x, y);
-            city.setOrganism(human, x, y);
-            humanCount++;
-        } else {
-            auto *zombie = new Zombie(&city, 1, 1);
-            zombie->setPosition(x, y);
-            city.setOrganism(zombie, x, y);
-            zombieCount++;
-        }
-        organisms.insert(organisms.end(), city.getOrganism(x, y));
-    }
-}
-
-void displayGrid(){
-    for (int i = 0; i < GRIDSIZE; i++){
-        for (int j = 0; j < GRIDSIZE; j++){
-            if (city.getOrganism(i, j) == nullptr)
-                cout << ' ' << '-' << ' ';
-            else if (city.getOrganism(i, j)->getSpecies() == 'H')
-                cout << "\033[3" << HUMAN_COLOR << "m H \033[0m";
-            else
-                cout << "\033[3" << ZOMBIE_COLOR << "m Z \033[0m";
-        }
-        cout << endl;
-    }
-    cout << "Zombies: " << zombieCount << " | Humans: " << humanCount << " | Iteration: " << iteration << endl;
+    return count;
 }

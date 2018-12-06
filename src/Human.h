@@ -7,23 +7,23 @@
 #ifndef APOCALYPSESIM_HUMAN_H
 #define APOCALYPSESIM_HUMAN_H
 
+#include <vector>
 #include "Organism.h"
+#include "City.h"
+
+using namespace std;
 
 class Human : public Organism
 {
-private:
-    bool eaten;
 public:
     Human();
-    Human( City *city, int width, int height );
+
+    Human(City *city);
     virtual ~Human();
 
-    bool isEaten();
-
-    void die();
-    int* breed() override;
-
     void move() override;
+
+    void spawn() override;
 };
 
 

@@ -8,21 +8,33 @@
 #ifndef APOCALYPSESIM_ZOMBIE_H
 #define APOCALYPSESIM_ZOMBIE_H
 
+#include <vector>
 #include "Organism.h"
+#include "City.h"
+
+using namespace std;
 
 class Zombie : public Organism
 {
 protected:
-    int hungerCounter;
-    bool canInfect;
-    bool isStarved;
+    int starved;
+
 public:
     Zombie();
-    Zombie( City *city, int width, int height );
+
+    Zombie(City *city);
     virtual ~Zombie();
 
     void move() override;
-    int *breed() override;
+
+    void spawn() override;
+
+    int getStarved();
+
+    void setStarved(int eat);
+
+    void starve();
+
 };
 
 
