@@ -28,21 +28,21 @@ void Zombie::move() {
     vector<int> moves;
 
     // Check for food.
-    if (y - 1 >= 0 && (Human *) city->getOrganism(x, y - 1) != nullptr)
+    if (y - 1 >= 0 && dynamic_cast<Human *>(city->getOrganism(x, y - 1)) != nullptr)
         moves.push_back(NORTH);
-    if (y + 1 < GRID_HEIGHT && (Human *) city->getOrganism(x, y + 1) != nullptr)
+    if (y + 1 < GRID_HEIGHT && dynamic_cast<Human *>(city->getOrganism(x, y + 1)) != nullptr)
         moves.push_back(SOUTH);
-    if (x + 1 < GRID_WIDTH && (Human *) city->getOrganism(x + 1, y) != nullptr)
+    if (x + 1 < GRID_WIDTH && dynamic_cast<Human *>(city->getOrganism(x + 1, y)) != nullptr)
         moves.push_back(EAST);
-    if (x - 1 >= 0 && (Human *) city->getOrganism(x - 1, y) != nullptr)
+    if (x - 1 >= 0 && dynamic_cast<Human *>(city->getOrganism(x - 1, y)) != nullptr)
         moves.push_back(WEST);
-    if (y - 1 >= 0 && x + 1 < GRID_WIDTH && (Human *) city->getOrganism(x + 1, y - 1) != nullptr)
+    if (y - 1 >= 0 && x + 1 < GRID_WIDTH && dynamic_cast<Human *>(city->getOrganism(x + 1, y - 1)) != nullptr)
         moves.push_back(NORTH_EAST);
-    if (y + 1 < GRID_HEIGHT && x + 1 < GRID_WIDTH && (Human *) city->getOrganism(x + 1, y + 1) != nullptr)
+    if (y + 1 < GRID_HEIGHT && x + 1 < GRID_WIDTH && dynamic_cast<Human *>(city->getOrganism(x + 1, y + 1)) != nullptr)
         moves.push_back(SOUTH_EAST);
-    if (y - 1 >= 0 && x - 1 >= 0 && (Human *) city->getOrganism(x - 1, y - 1) != nullptr)
+    if (y - 1 >= 0 && x - 1 >= 0 && dynamic_cast<Human *>(city->getOrganism(x - 1, y - 1)) != nullptr)
         moves.push_back(NORTH_WEST);
-    if (y + 1 < GRID_HEIGHT && x - 1 >= 0 && (Human *) city->getOrganism(x - 1, y + 1) != nullptr)
+    if (y + 1 < GRID_HEIGHT && x - 1 >= 0 && dynamic_cast<Human *>(city->getOrganism(x - 1, y + 1)) != nullptr)
         moves.push_back(SOUTH_WEST);
 
     // if there's people to eat, reset starve timer

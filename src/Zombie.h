@@ -27,7 +27,6 @@ public:
     virtual ~Zombie();
 
     void move() override;
-
     void breed() override;
 
     void starve();
