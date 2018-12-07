@@ -14,7 +14,7 @@ const int ZOMBIE_STARTCOUNT = 5; //initial Zombie count
 const int HUMAN_BREED = 3; // steps until a Human breeds
 const int ZOMBIE_BREED = 8; // steps until a Zombie breeds
 const int ZOMBIE_STARVE = 3; // steps until a Zombie starves and converts back
-const int MAX_ITERATIONS = 100; // max iterations
+const double ITERATION_DELAY = 1.0; // amount of time to wait until continuing the loop
 
 
 // ANSI Color works a little differently than Windows SetConsoleTextAttribute, so some modifications here

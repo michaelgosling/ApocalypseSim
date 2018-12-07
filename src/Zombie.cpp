@@ -94,7 +94,8 @@ void Zombie::move() {
 
     // if there's a valid move, decide on a random one
     if (!moves.empty()) {
-        srand(static_cast<unsigned int>(time(nullptr)));
+        // seed random with current time and then grab a random move
+        srand((unsigned int) time(nullptr));
         int move = moves.at(rand() % moves.size());
 
         // Set previous location to null
@@ -154,7 +155,6 @@ vector<int> Zombie::findHumans() {
  * Create a new zombie if the time is right
  */
 void Zombie::breed() {
-    // TODO: Breed code
     // if the infect counter is above or equal to the zombie breed threshold, execute this
     if (this->infectCounter >= ZOMBIE_BREED) {
         // fill a vector with locations of humans adjacent
@@ -163,6 +163,7 @@ void Zombie::breed() {
         // if there's humans to convert
         if (!humans.empty()) {
             // get a random human from the vector
+            srand((unsigned int) time(nullptr));
             int infectTarget = humans.at(rand() % humans.size());
 
             // create a new zombie

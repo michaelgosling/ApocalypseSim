@@ -69,6 +69,7 @@ void Human::move() {
         city->setOrganism(nullptr, x, y);
 
         // get a random move
+        srand((unsigned int) time(nullptr));
         int move = moves.at(rand() % moves.size());
 
         // get a new location based on the decided move
@@ -87,10 +88,11 @@ void Human::move() {
 }
 
 /**
- * Creates a new human in an adjacent square if the time is right
+ * Creates a new human in an adjacent square
  */
 void Human::breed() {
-    if (this->breedCounter >= 3) {
+    // if the breed counter is above threshold, execute
+    if (this->breedCounter >= HUMAN_BREED) {
         // vector to store target directions
         vector<int> targets;
 
@@ -106,6 +108,7 @@ void Human::breed() {
 
         //get random move from vector
         if (!targets.empty()) {
+            srand((unsigned int) time(nullptr));
             int target = targets.at(rand() % targets.size());
 
             // create a new human
