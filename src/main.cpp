@@ -21,7 +21,7 @@ void refreshMoves();
  */
 void setup() {
     city = new City;
-
+    srand(static_cast<unsigned int>(time(nullptr)));
     for (auto j = 0; j < HUMAN_STARTCOUNT + ZOMBIE_STARTCOUNT; j++) {
         int x = 0;
         int y = 0;
@@ -49,7 +49,7 @@ void setup() {
  */
 int main() {
     setup();
-    while (running) {
+    while (currentIteration < MAX_ITERATIONS) {
         displayGrid();
         cin.get();
         refreshMoves();

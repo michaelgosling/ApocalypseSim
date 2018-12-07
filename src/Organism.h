@@ -46,6 +46,8 @@ public:
     void setMoved(bool);
     Species getSpecies();
 
+    std::string getSpeciesString();
+
     friend ostream &operator<<(ostream &, Organism *);
 };
 

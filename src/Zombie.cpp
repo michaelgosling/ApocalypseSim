@@ -4,6 +4,8 @@
 // Last Updated by Michael Gosling on 12/03/18.
 //
 
+#include <stdlib.h>
+#include <time.h>
 #include "Zombie.h"
 #include "Human.h"
 
@@ -65,6 +67,7 @@ void Zombie::move() {
 
     // if there's a valid move, decide on a random one
     if (!moves.empty()) {
+        srand(static_cast<unsigned int>(time(nullptr)));
         int move = moves.at(rand() % moves.size());
 
         // Set previous location to null
@@ -122,7 +125,7 @@ void Zombie::move() {
  * Create a new zombie if the time is right
  */
 void Zombie::breed() {
-    // TODO: Breeding code
+    // TODO: Breed code
 }
 
 /**

@@ -5,6 +5,7 @@
 //
 
 #include "Organism.h"
+#include "GameSpecs.h"
 
 /** Default Constructor */
 Organism::Organism() = default;
@@ -58,6 +59,31 @@ Species Organism::getSpecies() {
  * @return output stream
  */
 ostream &operator<<(ostream &output, Organism *organism) {
-    output << " " << ((Species::ZOMBIE == organism->getSpecies()) ? 'Z' : 'H') << " ";
+    output << " " << organism->getSpeciesString() << " ";
     return output;
+}
+
+std::string Organism::getSpeciesString() {
+    // create a new string, append different values depending on the species
+    std::string outputString;
+
+    if (Species::ZOMBIE == this->getSpecies()) {
+        outputString.append("\033[1;");
+        outputString.append(to_string(ZOMBIE_COLOR));
+        outputString.append("m");
+        outputString.append("Z");
+        outputString.append("\033[0;");
+        outputString.append(to_string(RESET_COLOR));
+        outputString.append("m");
+    } else {
+        outputString.append("\033[1;");
+        outputString.append(to_string(HUMAN_COLOR));
+        outputString.append("m");
+        outputString.append("H");
+        outputString.append("\033[0;");
+        outputString.append(to_string(RESET_COLOR));
+        outputString.append("m");
+    }
+    // return string
+    return outputString;
 }

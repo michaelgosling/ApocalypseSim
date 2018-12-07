@@ -76,7 +76,7 @@ ostream &operator<<(ostream &output, City &city) {
             if (j == nullptr)
                 output << " - ";
             else
-                output << " " << ((Species::ZOMBIE == j->getSpecies()) ? 'Z' : 'H') << " ";
+                output << " " << j->getSpeciesString() << " ";
         }
         output << endl;
     }

@@ -15,6 +15,8 @@ using namespace std;
 
 class Human : public Organism
 {
+private:
+    int breedCounter = 0;
 public:
     Human();
 
@@ -22,7 +24,6 @@ public:
     virtual ~Human();
 
     void move() override;
-
     void breed() override;
 };
 
