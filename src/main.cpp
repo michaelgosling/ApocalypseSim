@@ -7,13 +7,13 @@
 // fields
 City *city;
 int currentIteration = 1;
-bool running = false;
 
 // prototypes
 int getCount(Species species);
 void displayGrid();
-
 void refreshMoves();
+
+void breedOrganisms();
 
 /**
  * Creates a new city and fills  with humans and zombies.
@@ -39,8 +39,6 @@ void setup() {
             city->setOrganism(zombie, x, y);
         }
     }
-
-    running = true;
 }
 
 /**
@@ -49,11 +47,12 @@ void setup() {
  */
 int main() {
     setup();
-    while (currentIteration < MAX_ITERATIONS) {
+    while (currentIteration <= MAX_ITERATIONS) {
         displayGrid();
-        cin.get();
         refreshMoves();
+        cin.get();
         city->move();
+        breedOrganisms();
     }
 }
 
@@ -87,5 +86,14 @@ void refreshMoves() {
     for (int row = 0; row < GRID_HEIGHT; row++) {
         for (int col = 0; col < GRID_WIDTH; col++)
             if (city->getOrganism(row, col) != nullptr) city->getOrganism(row, col)->setMoved(false);
+    }
+}
+
+void breedOrganisms() {
+    for (int row = 0; row < GRID_HEIGHT; row++) {
+        for (int col = 0; col < GRID_WIDTH; col++) {
+            if (city->getOrganism(row, col) != nullptr)
+                city->getOrganism(row, col)->breed();
+        }
     }
 }

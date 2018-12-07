@@ -1,7 +1,7 @@
 // Human.cpp - Class file for Human.h
 //
 // Created by Michael Gosling on 11/30/18.
-// Last Updated by Michael Gosling on 12/06/18.
+// Last Updated by Michael Gosling on 12/07/18.
 //
 
 #include "Human.h"
@@ -18,6 +18,36 @@ Human::Human(City *city) : Organism(city) {
 
 /** Destructor */
 Human::~Human() = default;
+
+/**
+ * Generates new X and Y co-ordinates based on the direction given
+ * @param move NORTH, SOUTH, EAST, WEST
+ * @return int array with a new x and y
+ */
+int *Human::generateNewPosition(int move) {
+    // generate new x and y co-ordinates based on move
+    int newX = this->x;
+    int newY = this->y;
+    switch (move) {
+        case NORTH:
+            newY--;
+            break;
+        case SOUTH:
+            newY++;
+            break;
+        case EAST:
+            newX++;
+            break;
+        case WEST:
+            newX--;
+            break;
+        default:
+            break;
+    }
+
+    // return int array with new coords
+    return new int[2]{newX, newY};
+}
 
 /** Move routine for Human */
 void Human::move() {
@@ -41,28 +71,12 @@ void Human::move() {
         // get a random move
         int move = moves.at(rand() % moves.size());
 
-        // get new location
-        int newX = this->x;
-        int newY = this->y;
-        switch (move) {
-            case NORTH:
-                newY--;
-                break;
-            case SOUTH:
-                newY++;
-                break;
-            case EAST:
-                newX++;
-                break;
-            case WEST:
-                newX--;
-                break;
-            default:
-                break;
-        }
+        // get a new location based on the decided move
+        int *newLoc;
+        newLoc = generateNewPosition(move);
 
         // set to new position
-        this->setPosition(newX, newY);
+        this->setPosition(newLoc[0], newLoc[1]);
 
         // set this human to new location on the city grid
         city->setOrganism(this, x, y);
@@ -76,53 +90,36 @@ void Human::move() {
  * Creates a new human in an adjacent square if the time is right
  */
 void Human::breed() {
-    // TODO: Breed code
-    if (breedCounter >= 3) {
-        vector<int> moves;
+    if (this->breedCounter >= 3) {
+        // vector to store target directions
+        vector<int> targets;
 
-        //stores the valid moves into the vector
+        // store all possible targets into the targets vector
         if (y - 1 >= 0 && city->getOrganism(x, y - 1) == nullptr)
-            moves.push_back(NORTH);
+            targets.push_back(NORTH);
         if (y + 1 < GRID_HEIGHT && city->getOrganism(x, y + 1) == nullptr)
-            moves.push_back(SOUTH);
+            targets.push_back(SOUTH);
         if (x + 1 < GRID_WIDTH && city->getOrganism(x + 1, y) == nullptr)
-            moves.push_back(EAST);
+            targets.push_back(EAST);
         if (x - 1 >= 0 && city->getOrganism(x - 1, y) == nullptr)
-            moves.push_back(WEST);
+            targets.push_back(WEST);
 
         //get random move from vector
-        if (!moves.empty()) {
-            int breedSpot = moves.at(rand() % moves.size());
-            //creates a new human
+        if (!targets.empty()) {
+            int target = targets.at(rand() % targets.size());
+
+            // create a new human
             auto *human = new Human(city);
 
-            //human's new position is set
-            int newX = this->x;
-            int newY = this->y;
-            switch (breedSpot) {
-                case NORTH:
-                    newY--;
-                    break;
-                case SOUTH:
-                    newY++;
-                    break;
-                case EAST:
-                    newX++;
-                    break;
-                case WEST:
-                    newX--;
-                    break;
-                default:
-                    break;
-            }
-            human->setPosition(newX, newY);
+            // generate a new x and y location using the decided target
+            int *newLoc;
+            newLoc = generateNewPosition(target);
 
-            //set the human in the city
-            city->setOrganism(human, human->x, human->y);
+            // set the new human's position to the generated location
+            human->setPosition(newLoc[0], newLoc[1]);
 
-            // set new human to moved so it doesn't move out of turn
-            human->moved = true;
-
+            // set the location in the city to the new humans location
+            city->setOrganism(human, newLoc[0], newLoc[1]);
         }
 
         // counter resets whether it breeds or not

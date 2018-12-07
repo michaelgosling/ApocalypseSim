@@ -1,7 +1,7 @@
 // Organism.h - Header file for Organism.cpp
 //
 // Created by Michael Gosling on 11/30/18.
-// Last Updated by Michael Gosling on 12/06/18.
+// Last Updated by Michael Gosling on 12/07/18.
 //
 
 
@@ -23,12 +23,14 @@ class Organism
 protected:
     int x;
     int y;
-    bool moved;
+    bool moved = true;
     Species species;
     City *city;
     enum {
         WEST, NORTH, EAST, SOUTH, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST
     };
+
+    virtual int *generateNewPosition(int) = 0;
 
 public:
     Organism();
@@ -37,15 +39,12 @@ public:
     virtual ~Organism();
 
     virtual void move() = 0;
-
     virtual void breed() = 0;
 
     void setPosition(int, int);
     bool getMoved();
-
     void setMoved(bool);
     Species getSpecies();
-
     std::string getSpeciesString();
 
     friend ostream &operator<<(ostream &, Organism *);

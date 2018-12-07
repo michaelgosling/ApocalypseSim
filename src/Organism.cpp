@@ -1,7 +1,7 @@
 // Organism.cpp - Class file for Organism.h
 //
 // Created by Michael Gosling on 11/30/18.
-// Last Updated by Michael Gosling on 12/03/18.
+// Last Updated by Michael Gosling on 12/07/18.
 //
 
 #include "Organism.h"
@@ -63,6 +63,10 @@ ostream &operator<<(ostream &output, Organism *organism) {
     return output;
 }
 
+/**
+ * Returns the species as a string of either a single H or a single Z, colored with ANSI
+ * @return string
+ */
 std::string Organism::getSpeciesString() {
     // create a new string, append different values depending on the species
     std::string outputString;

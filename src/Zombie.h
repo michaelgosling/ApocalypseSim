@@ -1,7 +1,7 @@
 // Zombie.h - Header file for Zombie.cpp
 //
 // Created by Michael Gosling on 11/30/18.
-// Last Updated by Michael Gosling on 12/03/18.
+// Last Updated by Michael Gosling on 12/07/18.
 //
 
 
@@ -17,9 +17,10 @@ using namespace std;
 class Zombie : public Organism
 {
 protected:
-    int starveTimer = 0;
-    int infectTimer;
-
+    int starveCounter = 0;
+    int infectCounter = 0;
+protected:
+    int *generateNewPosition(int) override;
 public:
     Zombie();
 
@@ -30,6 +31,8 @@ public:
     void breed() override;
 
     void starve();
+
+    vector<int> findHumans();
 };
 
 

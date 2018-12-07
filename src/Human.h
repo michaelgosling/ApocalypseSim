@@ -1,7 +1,7 @@
 // Human.h - Header file for Human.cpp
 //
 // Created by Michael Gosling on 11/30/18.
-// Last Updated by Michael Gosling on 12/03/18.
+// Last Updated by Michael Gosling on 12/07/18.
 //
 
 #ifndef APOCALYPSESIM_HUMAN_H
@@ -17,6 +17,8 @@ class Human : public Organism
 {
 private:
     int breedCounter = 0;
+protected:
+    int *generateNewPosition(int) override;
 public:
     Human();
 

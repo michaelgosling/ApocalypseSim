@@ -1,9 +1,11 @@
 // City.cpp - Class file for City.h
 //
 // Created by Michael Gosling on 11/30/18.
+// Last updated by Michael Gosling on 12/07/18.
 //
 
 #include "City.h"
+#include <vector>
 
 /**
  * Default Constructor
@@ -45,23 +47,26 @@ void City::setOrganism(Organism *organism, int x, int y) {
  * Move everything in the city.
  */
 void City::move() {
-    // move humans
+    // vector to hold organisms
+    vector<Organism *> organisms;
+
+    // zombies go to end of vector, humans go to beginning
     for (auto &row : grid) {
         for (auto &org : row) {
             if (org != nullptr) {
-                if (org->getSpecies() == Species::HUMAN && !org->getMoved()) org->move();
+                if (org->getSpecies() == Species::ZOMBIE) organisms.push_back(org);
+                if (org->getSpecies() == Species::HUMAN) organisms.insert(organisms.begin(), org);
             }
         }
     }
 
-    // move zombies
-    for (auto &row : grid) {
-        for (auto &org : row) {
-            if (org != nullptr) {
-                if (org->getSpecies() == Species::ZOMBIE && !org->getMoved()) org->move();
-            }
-        }
-    }
+    // call move on all of them that haven't moved
+    for (auto &org : organisms)
+        if (!org->getMoved()) org->move();
+
+    // clear vector and shrink to fit so it frees the memory
+    organisms.clear();
+    organisms.shrink_to_fit();
 }
 
 /**
